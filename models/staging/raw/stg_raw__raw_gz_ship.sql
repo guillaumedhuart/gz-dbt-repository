@@ -1,8 +1,10 @@
-with
+  -- stg_raw__ship.sql
+
+  with
 
   source as (
 
-      select * from {{ source('raw', 'raw_gz_ship') }}
+      select * from {{ source('raw', 'ship') }}
 
   ),
 
