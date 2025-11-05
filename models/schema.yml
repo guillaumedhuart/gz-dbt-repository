@@ -1,0 +1,17 @@
+ # schema.yml
+
+ version: 2
+
+ sources:
+   - name: raw
+     database: fabled-emblem-475708-s3
+     schema: gz_raw_data
+     loader: bigquery
+     description: raw data for the gz project
+     freshness:
+       warn_after: {count: 12, period: hour}
+       error_after: {count: 24, period: hour}
+     tables:
+       - name: product
+       - name: sales
+       - name: ship
