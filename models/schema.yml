@@ -4,7 +4,7 @@
 
  sources:
    - name: raw
-     database: <fabled-emblem-475708-s3>
+     database: fabled-emblem-475708-s3
      schema: gz_raw_data
      loader: bigquery
      freshness:
@@ -13,6 +13,11 @@
        - name: sales
          identifier: raw_gz_sales
          description: sales of Greenweez / we have one row per product_id found in each orders_id
+         tests:
+           - dbt_utils.unique_combination_of_columns:
+               combination_of_columns:
+                 - orders_id
+                 - pdt_id
          columns:
            - name: date_date
              description: date of purchase
@@ -24,14 +29,6 @@
              description: the amount paid by the customer to purchase the product. revenue = quantity * selling_price
            - name: quantity
              description: the quantity of products purchased for a given order
-         tests:
-           - unique:
-               column_name: "(orders_id || '-' || pdt_id)"
-           ## OR ## if dbt_utils is installed
-           - dbt_utils.unique_combination_of_columns:
-               combination_of_columns:
-                 - orders_id
-                 - pdt_id
 
        - name: product
          identifier: raw_gz_product
